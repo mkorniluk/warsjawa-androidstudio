@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -29,6 +30,7 @@ public class MainActivity extends Activity {
 
 	SectionsPagerAdapter pagerAdapter;
 	ViewPager viewPager;
+    char[] allowed = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,11 @@ public class MainActivity extends Activity {
 			final ImageView imageIV = (ImageView) rootView
 					.findViewById(R.id.image);
 
+            String color = "";
+            for (int i = 0; i < 6; i++) {
+                color += allowed[new Random().nextInt(allowed.length)];
+            }
+
 			new AsyncTask<String, Void, Bitmap>() {
 				protected Bitmap doInBackground(String... url) {
 					Bitmap bitmap = null;
@@ -65,7 +72,7 @@ public class MainActivity extends Activity {
 				protected void onPostExecute(Bitmap result) {
 					imageIV.setImageBitmap(result);
 				}
-			}.execute(new String[] { "http://lorempixel.com/1920/1080/cats/" });
+			}.execute(new String[] { "http://placehold.it/1920x1080/" + color});
 
 			TextView labelTV = (TextView) rootView.findViewById(R.id.label);
 			String label = "This is an awesome picture of a furry cat no. "
