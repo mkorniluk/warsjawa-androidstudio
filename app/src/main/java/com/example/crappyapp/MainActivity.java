@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class MainActivity extends Activity {
 
 	SectionsPagerAdapter pagerAdapter;
@@ -49,23 +51,7 @@ public class MainActivity extends Activity {
 					R.layout.page, null);
 			final ImageView imageIV = (ImageView) rootView
 					.findViewById(R.id.image);
-
-			new AsyncTask<String, Void, Bitmap>() {
-				protected Bitmap doInBackground(String... url) {
-					Bitmap bitmap = null;
-					try {
-						bitmap = BitmapFactory.decodeStream(new URL(url[0])
-								.openConnection().getInputStream());
-					} catch (MalformedURLException e) {
-					} catch (IOException e) {
-					}
-					return bitmap;
-				}
-
-				protected void onPostExecute(Bitmap result) {
-					imageIV.setImageBitmap(result);
-				}
-			}.execute(new String[] { "http://lorempixel.com/1920/1080/cats/" });
+            Picasso.with(MainActivity.this).load("http://lorempixel.com/1920/1080/cats/#" + System.currentTimeMillis()).into(imageIV);
 
 			TextView labelTV = (TextView) rootView.findViewById(R.id.label);
 			String label = "This is an awesome picture of a furry cat no. "
